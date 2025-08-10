@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>StepDown – suitsetamise järkjärguline vähendamine</title>
+<meta name="theme-color" content="#0a6c62">
+<link rel="manifest" href="data:application/manifest+json,{
+  &quot;name&quot;: &quot;StepDown&quot;,
+  &quot;short_name&quot;: &quot;StepDown&quot;,
+  &quot;start_url&quot;: &quot;.&quot;,
+  &quot;display&quot;: &quot;standalone&quot;,
+  &quot;background_color&quot;: &quot;#ffffff&quot;,
+  &quot;theme_color&quot;: &quot;#0a6c62&quot;,
+  &quot;icons&quot;: []
+}">
+<style>
+  :root{
+    --bg:#f6fbfa;
+    --card:#ffffff;
+    --ink:#0f2624;
+    --muted:#42605d;
+    --brand:#0a6c62;
+    --brand-2:#12a596;
+    --accent:#ffd166;
+    --bad:#cc3a3a;
+    --good:#2f9e44;
+    --ring: 0 0 0 3px rgba(18,165,150,0.25);
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font:16px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    background:var(--bg);
+    color:var(--ink);
+  }
+  header{
+    position:sticky; top:0; z-index:10;
+    background:linear-gradient(180deg, #0a6c62, #118579);
+    color:#fff;
+    padding:14px 16px;
+    display:flex; align-items:center; gap:12px; justify-content:space-between;
+    box-shadow:0 2px 10px rgba(0,0,0,.08);
+  }
+  header h1{font-size:18px; margin:0; font-weight:700; letter-spacing:.3px}
+  #nav{display:flex; gap:8px; overflow:auto}
+  #nav button{
+    background:rgba(255,255,255,.14);
+    color:#fff; border:0; padding:8px 12px; border-radius:999px; cursor:pointer;
+    font-weight:600;
+  }
+  #nav button.active{background:#fff; color:var(--brand)}
+  main{padding:14px; max-width:900px; margin:0 auto}
+  .card{
+    background:var(--card); border-radius:var(--radius);
+    box-shadow:0 6px 20px rgba(0,0,0,.06);
+    padding:16px; margin:12px 0;
+  }
+  .row{display:flex; gap:12px; flex-wrap:wrap}
+  .col{flex:1; min-width:260px}
+  h2{margin:8px 0 6px; font-size:18px}
+  h3{margin:8px 0; font-size:16px; color:var(--muted)}
+  .muted{color:var(--muted)}
+  .big{font-size:34px; font-weight:800}
+  .chip{display:inline-flex; align-items:center; gap:6px; padding:6px 10px; background:#eef7f6; border-radius:999px; font-weight:600; color:var(--brand)}
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    background:var(--brand); color:#fff; border:0; border-radius:12px; padding:12px 14px; cursor:pointer; font-weight:700;
+    box-shadow:0 6px 16px rgba(10,108,98,.25);
+  }
+  .btn.secondary{background:#e9f5f3; color:var(--brand); box-shadow:none}
+  .btn.bad{background:var(--bad)}
+  .btn.ghost{background:transparent; color:var(--brand); box-shadow:none; border:2px solid var(--brand)}
+  .grid{display:grid; gap:12px}
+  .grid.cols-2{grid-template-columns:repeat(2, minmax(0,1fr))}
+  .grid.cols-3{grid-template-columns:repeat(3, minmax(0,1fr))}
+  label{display:block; font-weight:600; margin:8px 0 6px}
+  input[type="number"], input[type="text"], select{
+    width:100%; padding:12px 12px; border-radius:12px; border:1px solid #d8ebe8; outline:none;
+    background:#fff;
+  }
+  input:focus, select:focus{box-shadow:var(--ring); border-color:var(--brand-2)}
+  .switch{display:flex; gap:10px; align-items:center}
+  .switch input{accent-color:var(--brand)}
+  .tag{display:inline-flex; align-items:center; gap:6px; background:#f0faf8; color:var(--brand); padding:6px 10px; border-radius:999px; margin:4px 6px 0 0; font-size:13px}
+  .badges{display:flex; gap:10px; flex-wrap:wrap}
+  .badge{background:#f7f7ff; color:#3b5bdb; padding:8px 10px; border-radius:10px; font-weight:700}
+  .badge.good{background:#effaf2; color:#2f9e44}
+  .badge.warn{background:#fff9e6; color:#946200}
+  .notice{padding:12px; background:#fff7dd; color:#7a5d00; border-radius:12px}
+  .progressbar{height:12px; background:#ecf3f2; border-radius:999px; overflow:hidden}
+  .progressbar > i{display:block; height:100%; background:linear-gradient(90deg, var(--brand), var(--brand-2))}
+  .center{text-align:center}
+  .right{text-align:right}
+  .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
+  .pill{padding:8px 10px; border-radius:999px; background:#eef7f6; display:inline-block; font-weight:700; color:var(--brand)}
+  .kv{display:grid; grid-template-columns:1fr auto; gap:8px; align-items:center}
+  .hidden{display:none !important}
+  /* Modal */
+  dialog{border:0; border-radius:16px; padding:0; width:min(540px, 96vw); box-shadow:0 20px 60px rgba(0,0,0,.25)}
+  .modal-body{padding:16px}
+  .modal-head{padding:14px 16px; background:linear-gradient(180deg, #0a6c62, #118579); color:#fff; border-radius:16px 16px 0 0}
+  .modal-actions{display:flex; gap:10px; justify-content:flex-end; padding:16px}
+  .timer{font-size:46px; font-weight:900; letter-spacing:1px}
+  /* Simple sparkline */
+  .chart{width:100%; height:160px; display:block}
+  .footnote{font-size:12px; color:#6c7c7a}
+  .link{color:var(--brand); text-decoration:underline; cursor:pointer}
+  @media (max-width:560px){
+    .grid.cols-2, .grid.cols-3{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>StepDown</h1>
+  <nav id="nav">
+    <button data-view="dashboard" class="active">Avaleht</button>
+    <button data-view="log">Logi</button>
+    <button data-view="plaan">Plaan</button>
+    <button data-view="stat">Statistika</button>
+    <button data-view="preemiad">Preemiad</button>
+    <button data-view="seaded">Seaded</button>
+  </nav>
+</header>
+<main>
+  <!-- Onboarding -->
+  <section id="onboarding" class="card hidden">
+    <h2>Tere tulemast! Alustame sinu lähteandmetest.</h2>
+    <p class="muted">StepDown aitab sul vähendada suitsude arvu sammhaaval. Siin pole häbi ega survet – ainult targa plaani ja väikeste võitudega edasi liikumine.</p>
+    <div class="grid cols-2">
+      <div class="card">
+        <label>Keskmine suitsude arv päevas</label>
+        <input id="ob-cigs" type="number" min="1" max="200" placeholder="nt 20">
+        <label>Paki hind (€)</label>
+        <input id="ob-pack" type="number" min="0" step="0.01" placeholder="nt 7.50">
+        <label>Vähendamise tempo kuus</label>
+        <select id="ob-rate">
+          <option value="0.10">Aeglane (–10%)</option>
+          <option value="0.15" selected>Mõõdukas (–15%)</option>
+          <option value="0.20">Tugev (–20%)</option>
+        </select>
+        <label>Peamised vallandajad (vali mitmeid)</label>
+        <div id="ob-triggers" class="badges">
+          <!-- populated by JS -->
+        </div>
+        <button class="btn" id="ob-save">Loo isiklik plaan</button>
+      </div>
+      <div class="card">
+        <h3>Mida oodata?</h3>
+        <ul>
+          <li>Isikupärane päevane piir, mis kohandub sinu tempoga.</li>
+          <li><b>“Craving pause”</b> – 2–5 minuti harjutused iha vaibutamiseks.</li>
+          <li>Vallandajate jälgimine ja analüüs.</li>
+          <li>Punktid, märgid ja tervise verstapostid.</li>
+          <li>Rahalise kokkuhoiu ja graafikute ülevaade.</li>
+        </ul>
+        <p class="notice">NB! StepDown ei häbista ega sunni. Tagasilöögid on loomulikud. Jätkame sealt, kus oled.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dashboard -->
+  <section id="dashboard" class="">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="kv">
+            <div>
+              <h2>Tänane eesmärk</h2>
+              <div class="big"><span id="todayLimit">–</span> suitsu</div>
+              <div class="muted">Seni logitud: <b id="todayCount">0</b></div>
+            </div>
+            <div>
+              <span class="chip">Sari: <b id="streak">0</b> päeva</span>
+            </div>
+          </div>
+          <div class="progressbar" style="margin-top:10px"><i id="progressFill" style="width:0%"></i></div>
+          <div class="row" style="margin-top:12px">
+            <button class="btn" id="btn-log-quick">+ Lisa suits</button>
+            <button class="btn secondary" id="btn-crave">Craving pause</button>
+            <button class="btn ghost" data-view-link="stat">Vaata graafikut</button>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Rahaline kokkuhoid</h3>
+          <div class="grid cols-3">
+            <div>
+              <div class="muted">Täna</div>
+              <div class="big mono" id="moneyToday">€0.00</div>
+            </div>
+            <div>
+              <div class="muted">Sel nädalal</div>
+              <div class="big mono" id="moneyWeek">€0.00</div>
+            </div>
+            <div>
+              <div class="muted">Kokku</div>
+              <div class="big mono" id="moneyTotal">€0.00</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <h3>Tänane mikronõuanne</h3>
+          <p id="tipText">—</p>
+          <div class="row">
+            <button class="btn secondary" id="btn-new-tip">Uus nipp</button>
+            <button class="btn ghost" data-view-link="plaan">Kohanda plaani</button>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Kiirlogi vallandaja</h3>
+          <div id="quickTriggers" class="badges"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Viimase 14 päeva trend</h3>
+      <svg id="chart14" class="chart" viewBox="0 0 600 160" preserveAspectRatio="none" aria-label="14 päeva graafik"></svg>
+      <div class="footnote">Joon: logitud suitsud; punktirida: päevane limiit. Püüdle trendi alla.</div>
+    </div>
+  </section>
+
+  <!-- Log -->
+  <section id="log" class="hidden">
+    <div class="card">
+      <h2>Lisa suits</h2>
+      <label>Kellaaeg</label>
+      <input type="text" id="log-time" placeholder="automaatselt praegune (soovi korral muuda)">
+      <label>Põhjus / vallandaja</label>
+      <select id="log-trigger"></select>
+      <label>Märkmed (vabatahtlik)</label>
+      <input type="text" id="log-notes" placeholder="nt stress, vaidlus, igavus...">
+      <div class="row" style="margin-top:12px">
+        <button class="btn" id="log-save">Salvesta</button>
+        <button class="btn secondary" id="log-cancel">Tühista</button>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Tänased kirjed</h3>
+      <div id="todayEntries"></div>
+    </div>
+  </section>
+
+  <!-- Plan -->
+  <section id="plaan" class="hidden">
+    <div class="card">
+      <h2>Sinu vähendamisplaan</h2>
+      <div class="grid cols-3">
+        <div>
+          <div class="muted">Lähtebaas</div>
+          <div class="big mono" id="baseCigs">–</div>
+          <div class="footnote">suitsu/päev</div>
+        </div>
+        <div>
+          <div class="muted">Tempo</div>
+          <div class="big" id="rateLabel">–%</div>
+          <div class="footnote">vähendamine kuus</div>
+        </div>
+        <div>
+          <div class="muted">Tänane limiit</div>
+          <div class="big mono" id="limitNow">–</div>
+          <div class="footnote">kohanduv</div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Kohanda tempot</h3>
+      <label>Vähendamise tempo</label>
+      <select id="rateEdit">
+        <option value="0.10">–10% / kuu (leebe)</option>
+        <option value="0.15">–15% / kuu (tasakaal)</option>
+        <option value="0.20">–20% / kuu (intensiivne)</option>
+      </select>
+      <div class="row" style="margin-top:12px">
+        <button class="btn" id="saveRate">Salvesta tempo</button>
+        <button class="btn ghost" id="resetToday">Taasta tänane limiit</button>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Vallandajate haldus</h3>
+      <div id="manageTriggers" class="badges"></div>
+      <div class="row" style="margin-top:10px">
+        <input type="text" id="newTrigger" placeholder="Lisa uus vallandaja">
+        <button class="btn secondary" id="addTrigger">Lisa</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Statistics -->
+  <section id="stat" class="hidden">
+    <div class="card">
+      <h2>Kokkuvõte</h2>
+      <div class="grid cols-3">
+        <div><div class="muted">Keskmine 7p</div><div class="big mono" id="avg7">–</div></div>
+        <div><div class="muted">Keskmine 30p</div><div class="big mono" id="avg30">–</div></div>
+        <div><div class="muted">Streak</div><div class="big mono" id="streak2">0</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>30 päeva trend</h3>
+      <svg id="chart30" class="chart" viewBox="0 0 600 160" preserveAspectRatio="none"></svg>
+    </div>
+    <div class="card">
+      <h3>Vallandajate muster</h3>
+      <div id="triggerStats"></div>
+    </div>
+  </section>
+
+  <!-- Rewards -->
+  <section id="preemiad" class="hidden">
+    <div class="card">
+      <h2>Punktid ja märgid</h2>
+      <div class="grid cols-3">
+        <div>
+          <div class="muted">Punktid</div>
+          <div class="big mono" id="points">0</div>
+        </div>
+        <div>
+          <div class="muted">Avatud märgid</div>
+          <div class="big mono" id="badgeCount">0</div>
+        </div>
+        <div>
+          <div class="muted">Sääst kokku</div>
+          <div class="big mono" id="moneyTotal2">€0.00</div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Su märgid</h3>
+      <div id="badges" class="badges"></div>
+    </div>
+    <div class="card">
+      <h3>Lukustatavad hüved</h3>
+      <ul id="unlockables">
+        <li><b>Rahulik hingamise audio</b> – 100 punkti</li>
+        <li><b>Fookuse taimer (Pomodoro)</b> – 200 punkti</li>
+        <li><b>Isikupärased mikronipid</b> – 300 punkti</li>
+      </ul>
+      <p class="muted">NB: Need on virtuaalsed hüved, mis avanevad, kui saavutad järjepidevuse.</p>
+    </div>
+  </section>
+
+  <!-- Settings -->
+  <section id="seaded" class="hidden">
+    <div class="card">
+      <h2>Seaded</h2>
+      <div class="switch">
+        <input type="checkbox" id="notiMorning" />
+        <label for="notiMorning">Hommikune meeldetuletus</label>
+      </div>
+      <div class="switch">
+        <input type="checkbox" id="notiCrave" />
+        <label for="notiCrave">“Craving pause” soovitused</label>
+      </div>
+      <div class="switch">
+        <input type="checkbox" id="notiEvening" />
+        <label for="notiEvening">Õhtune kokkuvõte</label>
+      </div>
+      <div class="row" style="margin-top:12px">
+        <button class="btn bad" id="wipe">Kustuta andmed</button>
+      </div>
+      <p class="footnote">Andmed hoitakse ainult sinu seadmes (localStorage). Soovi korral võid faili salvestada ja mujale varundada.</p>
+    </div>
+  </section>
+</main>
+
+<!-- Craving pause modal -->
+<dialog id="craveModal">
+  <div class="modal-head">
+    <h3>Craving pause – peata iha 2–5 minutiga</h3>
+  </div>
+  <div class="modal-body">
+    <div class="grid cols-2">
+      <div>
+        <p><b>Hingamisring (2:00)</b> – hinga sisse 4, hoia 4, välja 6. Vaata animatsiooni.</p>
+        <div id="breathAnim" class="center" style="margin:12px 0">
+          <svg width="220" height="220" viewBox="0 0 220 220">
+            <circle cx="110" cy="110" r="80" fill="#e9f5f3"></circle>
+            <circle id="breathDot" cx="110" cy="30" r="10" fill="#12a596"></circle>
+          </svg>
+        </div>
+        <div class="center timer" id="craveTimer">02:00</div>
+      </div>
+      <div>
+        <p><b>Vali lisatoiming</b></p>
+        <ul id="craveTasks" style="padding-left:18px">
+          <li>Joo aeglaselt klaas vett.</li>
+          <li>Seisa, venita õlad ja kael 30 sek.</li>
+          <li>Kirjuta: “Mis vallandas soovi?”</li>
+          <li>Mine 2 minutit värske õhu kätte.</li>
+          <li>Vaheta hetkeks tegevust (näiteks 10 kükki).</li>
+        </ul>
+        <div class="notice">Kui taimer jõuab nulli, küsi endalt: <i>“Kas ma vajan suitsu praegu või suudan veel 5 minutit oodata?”</i></div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-actions">
+    <button class="btn secondary" id="craveSkip">Sulge</button>
+    <button class="btn" id="craveDone">Iha möödus</button>
+  </div>
+</dialog>
+
+<script>
+/* ---------- Väike util ---------- */
+const $ = sel => document.querySelector(sel);
+const $$ = sel => Array.from(document.querySelectorAll(sel));
+const store = {
+  get(){ try { return JSON.parse(localStorage.getItem('stepdown')||'{}'); } catch(e){ return {}; } },
+  set(d){ localStorage.setItem('stepdown', JSON.stringify(d)); },
+  reset(){ localStorage.removeItem('stepdown'); }
+};
+const todayKey = () => new Date().toISOString().slice(0,10);
+
+/* ---------- Algandmed ---------- */
+const DEFAULT_TRIGGERS = ["Kohvipaus","Stress","Seltskond","Igavus","Pärast sööki","Auto / sõit","Tööpaus","Alkohol"];
+
+const model = {
+  initIfEmpty(){
+    const d = store.get();
+    if(!d.user){
+      store.set({
+        user:{
+          baseCigs: null,
+          packPrice: 7.5,
+          monthlyRate: 0.15,
+          triggers: DEFAULT_TRIGGERS,
+          notiMorning: true,
+          notiCrave: true,
+          notiEvening: false,
+          createdAt: todayKey()
+        },
+        plan:{ overrides:{} },
+        log:{}, // date -> { entries:[{t, trigger, notes}], limit:number }
+        points:0,
+        badges:[]
+      });
+    }
+  },
+  data(){ return store.get(); },
+  save(d){ store.set(d); }
+};
+
+/* ---------- View vahetus ---------- */
+function show(view){
+  // nav
+  $$('#nav button').forEach(b=> b.classList.toggle('active', b.dataset.view === view));
+  // sections
+  ['dashboard','log','plaan','stat','preemiad','seaded','onboarding'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.classList.toggle('hidden', id !== view);
+  });
+}
+
+/* ---------- Onboarding ---------- */
+function renderOnboarding(){
+  const d = model.data();
+  const ob = $('#onboarding');
+  if(d.user.baseCigs){ ob.classList.add('hidden'); return; }
+  ob.classList.remove('hidden');
+  // populate trigger chips
+  const wrap = $('#ob-triggers'); wrap.innerHTML = '';
+  DEFAULT_TRIGGERS.forEach(tr => {
+    const el = document.createElement('span');
+    el.className = 'tag'; el.textContent = tr;
+    el.dataset.sel = '1';
+    el.addEventListener('click', ()=>{
+      el.dataset.sel = el.dataset.sel === '1' ? '0' : '1';
+      el.style.opacity = el.dataset.sel === '1' ? '1' : '.45';
+    });
+    wrap.appendChild(el);
+  });
+  $('#ob-save').onclick = () => {
+    const base = parseInt($('#ob-cigs').value,10);
+    const price = parseFloat($('#ob-pack').value||'7.5');
+    const rate = parseFloat($('#ob-rate').value);
+    const chosen = Array.from(wrap.querySelectorAll('.tag')).filter(t=>t.dataset.sel==='1').map(t=>t.textContent);
+    if(!base || base<1){ alert('Palun sisesta päevaste suitsude arv.'); return; }
+    const d0 = model.data();
+    d0.user.baseCigs = base;
+    d0.user.packPrice = isFinite(price)? price : 7.5;
+    d0.user.monthlyRate = rate;
+    d0.user.triggers = chosen.length? chosen : DEFAULT_TRIGGERS;
+    model.save(d0);
+    // init today limit
+    ensureDay(todayKey());
+    hydrateUI();
+    show('dashboard');
+  };
+}
+
+/* ---------- Päeva kirje ---------- */
+function ensureDay(day){
+  const d = model.data();
+  d.log[day] = d.log[day] || { entries:[], limit: calcDailyLimit(day) };
+  // safeguard if limit missing
+  if(typeof d.log[day].limit !== 'number'){ d.log[day].limit = calcDailyLimit(day); }
+  model.save(d);
+}
+function calcDailyLimit(day){
+  const d = model.data();
+  const base = d.user.baseCigs || 0;
+  const rate = d.user.monthlyRate || 0.15;
+  if(!base) return 0;
+  // lineaarne lähenemine: iga päev väike samm (kuine % / 30)
+  const daysSince = Math.max(0, Math.floor((Date.parse(day) - Date.parse(d.user.createdAt))/86400000));
+  const dailyFactor = 1 - (rate/30)*daysSince;
+  const limit = Math.max(0, Math.round(base * Math.max(0.3, dailyFactor))); // ära lase alla 30% algtasemest
+  return limit;
+}
+
+/* ---------- Logimine ---------- */
+function addEntry(params){
+  ensureDay(todayKey());
+  const d = model.data();
+  const day = todayKey();
+  d.log[day].entries.push(params);
+  model.save(d);
+  awardPoints(2); // iga logi eest
+  hydrateUI();
+}
+function removeEntry(day, idx){
+  const d = model.data();
+  if(d.log[day]){
+    d.log[day].entries.splice(idx,1);
+    model.save(d);
+    hydrateUI();
+  }
+}
+
+/* ---------- Punktid ja märgid ---------- */
+function awardPoints(n){
+  const d = model.data();
+  d.points = (d.points||0) + n;
+  // märgid
+  const today = todayKey();
+  const cnt = (d.log[today]?.entries?.length)||0;
+  if(cnt === 0 && !d.badges.includes('Hommik ilma suitsuta')){
+    // ei anna siin, sest cnt 0 on enne logimist
+  }
+  // saavutused
+  if(cnt === 1 && !d.badges.includes('Stardipauk')){
+    d.badges.push('Stardipauk'); // esimesed kirjed
+  }
+  // päev eesmärgi piires
+  const limit = d.log[today]?.limit ?? 0;
+  if(cnt <= limit && !d.badges.includes('Raudne päev')){
+    // antakse õhtuses kontrollis; jätame siia no-op
+  }
+  model.save(d);
+}
+
+function checkDailyBadges(){
+  const d = model.data();
+  const day = todayKey();
+  const cnt = (d.log[day]?.entries?.length)||0;
+  const limit = d.log[day]?.limit ?? 0;
+  if(cnt <= limit && !d.badges.includes('Raudne päev')){
+    d.badges.push('Raudne päev');
+    d.points += 10;
+    model.save(d);
+  }
+}
+
+/* ---------- Streak & sääst ---------- */
+function computeStreak(){
+  const d = model.data();
+  let s = 0;
+  for(let i=0;i<3650;i++){
+    const date = new Date(); date.setDate(date.getDate()-i);
+    const k = date.toISOString().slice(0,10);
+    if(!d.log[k]) break;
+    const cnt = d.log[k].entries.length;
+    const limit = d.log[k].limit ?? calcDailyLimit(k);
+    if(cnt <= limit) s++;
+    else break;
+  }
+  return s;
+}
+
+function savingsForDay(day){
+  const d = model.data();
+  const base = d.user.baseCigs || 0;
+  const price = d.user.packPrice || 7.5;
+  const perCig = price/20; // lihtsustus
+  const planned = d.log[day]?.limit ?? calcDailyLimit(day);
+  const actual = d.log[day]?.entries?.length || 0;
+  const saved = Math.max(0, (base - actual)) * perCig;
+  // konservatiivne: kui actual < planned, kasutame ikkagi baasi-kõrvalekallet
+  return saved;
+}
+
+function formatMoney(n){ return '€' + (n).toFixed(2); }
+
+/* ---------- Tips ---------- */
+const TIPS = [
+  "Vaheta üks suits klaasi vee ja 2-minutilise jalutuse vastu.",
+  "Pane suits edasi 10 minutiks. Taimer aitab iha vaibutada.",
+  "Hinga 4-4-6 rütmis 2 minutit – see rahustab närvisüsteemi.",
+  "Seosta kohvipaus uue rutiiniga: lonks vett + sügav hingetõmme.",
+  "Kui iha tabab, vaheta asukohta – tule teise tuppa või õue.",
+  "Kirjuta üles: mis vallandas soovi? Teadlikkus = kontroll.",
+  "Leppige sõbraga kokku: kirjutad talle, kui suudad ühe suitsu edasi lükata.",
+  "Hoia käepärast näts või porkandikang – suu tegevus asendab rituaali.",
+  "Seadista „Craving pause” enne tuttavat vallandajat (nt kohv).",
+  "Üks komistamine ei nulli edu. Jätka plaaniga."
+];
+
+/* ---------- Graafikud (SVG) ---------- */
+function renderLineChart(svgId, days){
+  const d = model.data();
+  const W = 600, H = 160, P = 10;
+  const svg = document.getElementById(svgId);
+  svg.innerHTML = '';
+  // data points
+  const xs = []; const ys = []; const lims = [];
+  const today = new Date();
+  for(let i=days-1;i>=0;i--){
+    const dt = new Date(today); dt.setDate(dt.getDate()-i);
+    const k = dt.toISOString().slice(0,10);
+    const v = d.log[k]?.entries?.length ?? 0;
+    const lim = d.log[k]?.limit ?? calcDailyLimit(k);
+    xs.push(k); ys.push(v); lims.push(lim);
+  }
+  // scales
+  const maxY = Math.max(1, ...ys, ...lims);
+  const xStep = (W-2*P)/(days-1);
+  const y = v => H-P - (v/maxY)*(H-2*P);
+  const x = i => P + i*xStep;
+  // limit dots
+  const dots = lims.map((v,i)=> `<circle cx="${x(i)}" cy="${y(v)}" r="2.5" fill="#946200" />`).join('');
+  // line path
+  let dpath = '';
+  ys.forEach((v,i)=>{
+    dpath += (i===0? 'M':'L') + x(i) + ' ' + y(v) + ' ';
+  });
+  const path = `<path d="${dpath}" fill="none" stroke="#118579" stroke-width="2.5" stroke-linecap="round" />`;
+  // area under
+  const area = `<path d="${dpath} L ${x(days-1)} ${H-P} L ${x(0)} ${H-P} Z" fill="rgba(17,133,121,0.10)"/>`;
+  svg.innerHTML = `<rect x="0" y="0" width="${W}" height="${H}" fill="#fff"/>` + area + path + dots;
+}
+
+/* ---------- UI täitmine ---------- */
+function hydrateUI(){
+  const d = model.data();
+  const user = d.user;
+  const hasUser = !!user.baseCigs;
+  // nav vis
+  if(!hasUser){ show('onboarding'); $('#onboarding').classList.remove('hidden'); return; }
+  // ensure today
+  ensureDay(todayKey());
+
+  // Dashboard
+  const day = todayKey();
+  const limit = d.log[day].limit;
+  const count = d.log[day].entries.length;
+  $('#todayLimit').textContent = limit;
+  $('#todayCount').textContent = count;
+  const pct = Math.min(100, Math.round((count/Math.max(1,limit))*100));
+  $('#progressFill').style.width = pct + '%';
+
+  // Streak
+  const streak = computeStreak();
+  $('#streak').textContent = streak;
+  $('#streak2').textContent = streak;
+
+  // Money
+  const price = user.packPrice || 7.5;
+  const perCig = price/20;
+  const todaySaved = Math.max(0, (user.baseCigs - count)*perCig);
+  $('#moneyToday').textContent = formatMoney(todaySaved);
+  // week + total
+  let week=0, total=0;
+  for(let i=0;i<7;i++){
+    const dt = new Date(); dt.setDate(dt.getDate()-i);
+    const k = dt.toISOString().slice(0,10);
+    week += Math.max(0, (user.baseCigs - (d.log[k]?.entries?.length||0))*perCig);
+  }
+  for(const k in d.log){
+    total += Math.max(0, (user.baseCigs - (d.log[k]?.entries?.length||0))*perCig);
+  }
+  $('#moneyWeek').textContent = formatMoney(week);
+  $('#moneyTotal').textContent = formatMoney(total);
+  $('#moneyTotal2').textContent = formatMoney(total);
+
+  // Tip
+  $('#tipText').textContent = TIPS[Math.floor(Math.random()*TIPS.length)];
+
+  // Quick triggers
+  const qt = $('#quickTriggers'); qt.innerHTML = '';
+  user.triggers.forEach(tr=>{
+    const el = document.createElement('span'); el.className='tag'; el.textContent=tr;
+    el.onclick=()=>{ addEntry({t:new Date().toLocaleTimeString(), trigger:tr, notes:''}); };
+    qt.appendChild(el);
+  });
+
+  renderLineChart('chart14', 14);
+
+  // Plan pane
+  $('#baseCigs').textContent = user.baseCigs;
+  $('#rateLabel').textContent = Math.round(user.monthlyRate*100)+'%';
+  $('#limitNow').textContent = limit;
+  $('#rateEdit').value = String(user.monthlyRate);
+
+  // Log view defaults
+  $('#log-time').value = new Date().toLocaleTimeString();
+  const sel = $('#log-trigger'); sel.innerHTML='';
+  user.triggers.forEach(tr=>{
+    const o = document.createElement('option'); o.value = tr; o.textContent = tr; sel.appendChild(o);
+  });
+  // entries list
+  const wrap = $('#todayEntries'); wrap.innerHTML = '';
+  d.log[day].entries.forEach((e,i)=>{
+    const row = document.createElement('div'); row.className='card';
+    row.innerHTML = `<div class="kv"><div><b>${e.t}</b> – ${e.trigger} <span class="muted">${e.notes||''}</span></div>
+      <div><button class="btn secondary" data-del="${i}">Kustuta</button></div></div>`;
+    wrap.appendChild(row);
+  });
+  wrap.querySelectorAll('[data-del]').forEach(b=> b.addEventListener('click', ev=>{
+    removeEntry(day, parseInt(ev.currentTarget.dataset.del,10));
+  }));
+
+  // Rewards
+  $('#points').textContent = d.points||0;
+  $('#badgeCount').textContent = d.badges.length;
+  const bs = $('#badges'); bs.innerHTML = '';
+  d.badges.forEach(b=>{
+    const el = document.createElement('span'); el.className='badge good'; el.textContent=b; bs.appendChild(el);
+  });
+
+  // Stats
+  $('#avg7').textContent = avgDays(7).toFixed(1);
+  $('#avg30').textContent = avgDays(30).toFixed(1);
+  renderLineChart('chart30', 30);
+
+  // Trigger stats
+  const tstats = {}; 
+  Object.keys(d.log).forEach(k=>{
+    d.log[k].entries.forEach(e=>{ tstats[e.trigger]=(tstats[e.trigger]||0)+1; });
+  });
+  const twrap = $('#triggerStats'); twrap.innerHTML='';
+  Object.keys(tstats).sort((a,b)=> tstats[b]-tstats[a]).forEach(tr=>{
+    const el = document.createElement('div'); el.className='kv';
+    el.innerHTML = `<div>${tr}</div><div class="pill mono">${tstats[tr]}</div>`;
+    twrap.appendChild(el);
+  });
+
+  // Seaded
+  $('#notiMorning').checked = !!user.notiMorning;
+  $('#notiCrave').checked = !!user.notiCrave;
+  $('#notiEvening').checked = !!user.notiEvening;
+}
+
+function avgDays(n){
+  const d = model.data();
+  let sum=0, cnt=0;
+  for(let i=0;i<n;i++){
+    const dt = new Date(); dt.setDate(dt.getDate()-i);
+    const k = dt.toISOString().slice(0,10);
+    sum += (d.log[k]?.entries?.length)||0; cnt++;
+  }
+  return cnt? sum/cnt : 0;
+}
+
+/* ---------- Nav wiring ---------- */
+$$('#nav button').forEach(b=> b.onclick = () => { show(b.dataset.view); if(b.dataset.view==='stat'){ checkDailyBadges(); hydrateUI(); }});
+$$('[data-view-link="stat"]')?.addEventListener('click', ()=>{ show('stat'); });
+
+/* ---------- Log wiring ---------- */
+$('#btn-log-quick').onclick = ()=>{ addEntry({t:new Date().toLocaleTimeString(), trigger:$('#log-trigger').value||'Muu', notes:$('#log-notes').value||''}); };
+$('#log-save').onclick = ()=>{
+  addEntry({t:$('#log-time').value||new Date().toLocaleTimeString(), trigger:$('#log-trigger').value||'Muu', notes:$('#log-notes').value||''});
+  $('#log-notes').value='';
+};
+$('#log-cancel').onclick = ()=>{ $('#log-notes').value=''; };
+
+/* ---------- Plan wiring ---------- */
+$('#saveRate').onclick = ()=>{
+  const d = model.data(); d.user.monthlyRate = parseFloat($('#rateEdit').value)||0.15; model.save(d);
+  ensureDay(todayKey()); // limit recalculated lazily
+  hydrateUI();
+  alert('Tempo salvestatud.');
+};
+$('#resetToday').onclick = ()=>{
+  const d = model.data(); const k=todayKey();
+  if(d.log[k]){ d.log[k].limit = calcDailyLimit(k); model.save(d); hydrateUI(); }
+  alert('Tänane limiit taastatud.');
+};
+$('#addTrigger').onclick = ()=>{
+  const t = ($('#newTrigger').value||'').trim(); if(!t) return;
+  const d = model.data();
+  if(!d.user.triggers.includes(t)) d.user.triggers.push(t);
+  model.save(d); $('#newTrigger').value=''; hydrateUI(); renderManageTriggers();
+};
+
+/* ---------- Manage triggers ---------- */
+function renderManageTriggers(){
+  const d = model.data();
+  const wrap = $('#manageTriggers'); wrap.innerHTML='';
+  (d.user.triggers||[]).forEach(tr=>{
+    const el = document.createElement('span'); el.className='tag'; el.textContent=tr;
+    el.title = 'Klõps kustutamiseks';
+    el.onclick = ()=>{
+      if(confirm(`Kustuta vallandaja “${tr}”?`)){
+        const d2 = model.data();
+        d2.user.triggers = d2.user.triggers.filter(x=>x!==tr);
+        model.save(d2); renderManageTriggers(); hydrateUI();
+      }
+    };
+    wrap.appendChild(el);
+  });
+}
+
+/* ---------- Settings wiring ---------- */
+$('#notiMorning').onchange = (e)=>{ const d=model.data(); d.user.notiMorning=e.target.checked; model.save(d); };
+$('#notiCrave').onchange = (e)=>{ const d=model.data(); d.user.notiCrave=e.target.checked; model.save(d); };
+$('#notiEvening').onchange = (e)=>{ const d=model.data(); d.user.notiEvening=e.target.checked; model.save(d); };
+$('#wipe').onclick = ()=>{ if(confirm('Kustutan kõik andmed?')){ store.reset(); location.reload(); } };
+
+/* ---------- Craving pause ---------- */
+const craveModal = document.getElementById('craveModal');
+let craveInt=null, breathInt=null, tLeft=120;
+function openCrave(){
+  tLeft = 120;
+  $('#craveTimer').textContent = '02:00';
+  craveModal.showModal();
+  startBreath();
+  craveInt = setInterval(()=>{
+    tLeft--; if(tLeft<=0){ clearInterval(craveInt); $('#craveTimer').textContent='00:00'; checkDailyBadges(); } 
+    else {
+      const m = String(Math.floor(tLeft/60)).padStart(2,'0'); const s = String(tLeft%60).padStart(2,'0');
+      $('#craveTimer').textContent = `${m}:${s}`;
+    }
+  }, 1000);
+}
+function closeCrave(){
+  craveModal.close();
+  if(craveInt) clearInterval(craveInt);
+  if(breathInt) clearInterval(breathInt);
+}
+function startBreath(){
+  const dot = $('#breathDot');
+  let angle = 0;
+  breathInt = setInterval(()=>{
+    angle = (angle + 4) % 360; // pseudo-rütmiline liikumine
+    const rad = angle * Math.PI/180;
+    const r = 80;
+    const cx = 110 + r*Math.sin(rad);
+    const cy = 110 - r*Math.cos(rad);
+    dot.setAttribute('cx', cx.toFixed(1));
+    dot.setAttribute('cy', cy.toFixed(1));
+  }, 120);
+}
+$('#btn-crave').onclick = openCrave;
+$('#craveSkip').onclick = closeCrave;
+$('#craveDone').onclick = ()=>{
+  closeCrave();
+  awardPoints(5);
+  alert('Tubli! Iha taandus. +5 punkti');
+};
+
+/* ---------- Quick nav links ---------- */
+$$('[data-view-link]').forEach(el=> el.addEventListener('click', (e)=>{
+  const view = e.currentTarget.getAttribute('data-view-link'); show(view);
+}));
+
+// Populate trigger chips in onboarding
+(function seedTriggerChips(){
+  const wrap = $('#ob-triggers');
+  DEFAULT_TRIGGERS.forEach(tr=>{
+    // already added in renderOnboarding; guard
+  });
+})();
+
+/* ---------- Startup ---------- */
+model.initIfEmpty();
+renderOnboarding();
+hydrateUI();
+renderManageTriggers();
+
+// Nav: start on dashboard unless onboarding
+const d0 = model.data();
+if(!d0.user.baseCigs){ show('onboarding'); } else { show('dashboard'); }
+</script>
+</body>
+</html>
