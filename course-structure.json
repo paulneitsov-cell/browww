@@ -1,0 +1,129 @@
+{
+  "course": {
+    "title": "Fingerstyle Guitar: A Meditative Journey",
+    "philosophy": "Therapeutic, meditative approach. Each session is a practice in presence — the guitar as a tool for stillness as much as sound.",
+    "audience": "Adult beginners to intermediate players",
+    "modules": [
+      {
+        "id": 1,
+        "name": "Arriving at the Instrument",
+        "goal": "Build a relaxed, sustainable hand position and introduce the thumb-finger independence that underpins all fingerstyle playing.",
+        "difficulty": "Beginner",
+        "exercises": [
+          {
+            "title": "The Breathing Hand",
+            "description": "Practice resting your plucking hand on the guitar and releasing tension finger by finger, learning to feel the strings before making a single sound."
+          },
+          {
+            "title": "Thumb Pulse",
+            "description": "Play a steady, slow bass note with the thumb on a single open string, focusing entirely on consistent tone and the physical sensation of release."
+          },
+          {
+            "title": "One Finger at a Time",
+            "description": "Assign index, middle, and ring fingers to strings 1, 2, and 3 and pluck each finger in isolation, noticing the difference in tone between a forced and a relaxed stroke."
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "The Heartbeat Pattern",
+        "goal": "Establish a stable alternating-bass pattern and introduce the p-i-m-a sequence as a foundation for independent voice control.",
+        "difficulty": "Beginner",
+        "exercises": [
+          {
+            "title": "Bass and Breath",
+            "description": "Alternate the thumb between two bass strings on a single open chord, synchronizing each stroke with an exhale to internalize a meditative rhythm."
+          },
+          {
+            "title": "Travis Seed",
+            "description": "Combine the alternating thumb with a single repeated treble finger to experience the basic Travis-picking skeleton before adding complexity."
+          },
+          {
+            "title": "p-i-m-a Loop",
+            "description": "Arpeggiate four strings in sequence (p-i-m-a) on one chord, looping continuously until the pattern becomes automatic and the mind can settle."
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "name": "Chords That Flow",
+        "goal": "Develop fluid chord transitions without breaking the fingerpicking pattern, turning chord changes into a seamless part of the musical texture.",
+        "difficulty": "Beginner–Intermediate",
+        "exercises": [
+          {
+            "title": "The Anchor Finger",
+            "description": "Practice transitioning between two chords by keeping one shared finger planted on the fretboard, using that stillness as a physical anchor."
+          },
+          {
+            "title": "Change on the Exhale",
+            "description": "Play a four-bar loop and make every chord change on a designated beat tied to an exhale, training the body to release rather than tense at transition points."
+          },
+          {
+            "title": "Pattern Over Three Chords",
+            "description": "Apply the p-i-m-a arpeggio to a I–IV–V progression, letting the pattern run uninterrupted across chord changes to build unconscious muscle memory."
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "name": "Singing Melodies",
+        "goal": "Layer a melody on top of an accompaniment pattern, teaching students to hear and balance two independent voices in a single instrument.",
+        "difficulty": "Intermediate",
+        "exercises": [
+          {
+            "title": "Melody Alone First",
+            "description": "Play a simple 8-note melody on the high strings with only the fingers (no thumb), focusing on voicing each note with intention and equal weight."
+          },
+          {
+            "title": "Bass Holds the Ground",
+            "description": "Add a slow, steady thumb bass beneath the melody and practice letting the bass disappear from conscious awareness while the melody stays in the foreground."
+          },
+          {
+            "title": "Pinch and Sustain",
+            "description": "Practice pinching the thumb and one finger simultaneously to strike a bass note and melody note together, sustaining the high note across subsequent thumb strokes."
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "name": "Dynamics and Space",
+        "goal": "Explore volume, tone colour, and silence as expressive tools, moving beyond mechanical correctness into felt musical communication.",
+        "difficulty": "Intermediate",
+        "exercises": [
+          {
+            "title": "The Fade",
+            "description": "Play a repeating pattern and gradually reduce volume over eight bars to near-silence, then grow back, learning to control dynamics with finger weight rather than tension."
+          },
+          {
+            "title": "Ponticello to Dolce",
+            "description": "Shift your plucking hand from near the bridge (bright, present) to near the soundhole (warm, recessed) mid-phrase to experience the guitar's full tonal range."
+          },
+          {
+            "title": "The Rest Stroke Accent",
+            "description": "Insert a single rest-stroke note at the emotional peak of a phrase to make one note ring above the texture, practising the art of emphasis through restraint."
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "name": "A Complete Voice",
+        "goal": "Integrate all previous skills into a full piece, developing personal interpretation and establishing a sustainable daily practice ritual.",
+        "difficulty": "Intermediate",
+        "exercises": [
+          {
+            "title": "The Sketch Piece",
+            "description": "Compose a 16-bar original piece using only three chords and one of the patterns learned earlier, prioritising feel and intention over technical complexity."
+          },
+          {
+            "title": "Slow Mirror Practice",
+            "description": "Play a known piece at half-speed while watching the plucking hand in a mirror, using the visual feedback to identify and dissolve any remaining physical tension."
+          },
+          {
+            "title": "The Daily Ritual",
+            "description": "Design a personal 10-minute opening ritual — tuning, a single long tone, one technical exercise, one expressive passage — to be used at the start of every practice session."
+          }
+        ]
+      }
+    ]
+  }
+}
