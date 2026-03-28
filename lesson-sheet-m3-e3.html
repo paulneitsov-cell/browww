@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paul Neitsov | Pattern Over Three Chords</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 11pt;
+      color: #000;
+      background: #fff;
+      padding: 0;
+    }
+
+    @page {
+      size: A4;
+      margin: 18mm 20mm 18mm 20mm;
+    }
+
+    .page {
+      max-width: 170mm;
+      margin: 0 auto;
+      padding: 18mm 0;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      border-top: 2.5pt solid #000;
+      border-bottom: 1pt solid #000;
+      padding: 6pt 0 5pt 0;
+      margin-bottom: 18pt;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .header-left {
+      font-size: 13pt;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    .header-right {
+      font-size: 9pt;
+      text-align: right;
+      line-height: 1.6;
+      color: #000;
+    }
+
+    .header-right span {
+      display: block;
+    }
+
+    /* ── TITLE BLOCK ── */
+    .title-block {
+      margin-bottom: 16pt;
+    }
+
+    .exercise-title {
+      font-size: 19pt;
+      font-weight: bold;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+
+    .exercise-meta {
+      font-size: 9pt;
+      margin-top: 3pt;
+      font-style: italic;
+      color: #333;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 0.5pt solid #bbb;
+      margin: 12pt 0;
+    }
+
+    /* ── SECTION LABELS ── */
+    .section-label {
+      font-size: 7.5pt;
+      font-weight: bold;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 6pt;
+      color: #000;
+    }
+
+    /* ── DESCRIPTION ── */
+    .description {
+      font-size: 10.5pt;
+      line-height: 1.7;
+      margin-bottom: 14pt;
+    }
+
+    /* ── STEPS ── */
+    .steps {
+      margin-bottom: 14pt;
+    }
+
+    .steps ol {
+      padding-left: 18pt;
+    }
+
+    .steps ol li {
+      font-size: 10pt;
+      line-height: 1.65;
+      margin-bottom: 4pt;
+    }
+
+    .steps ol li strong {
+      font-weight: bold;
+    }
+
+    /* ── TWO COLUMNS (mistakes + mastery) ── */
+    .two-col {
+      display: flex;
+      gap: 20pt;
+      margin-bottom: 0;
+    }
+
+    .col {
+      flex: 1;
+    }
+
+    .col ul {
+      padding-left: 14pt;
+    }
+
+    .col ul li {
+      font-size: 9.5pt;
+      line-height: 1.6;
+      margin-bottom: 3pt;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      border-top: 1pt solid #000;
+      margin-top: 16pt;
+      padding-top: 12pt;
+    }
+
+    /* ── TAB SKETCH ── */
+    .tab-block {
+      margin-bottom: 14pt;
+    }
+
+    .tab-wrap {
+      overflow-x: auto;
+    }
+
+    pre.tab {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 8.5pt;
+      line-height: 1.55;
+      white-space: pre;
+      background: #f9f9f9;
+      border: 0.5pt solid #ccc;
+      padding: 8pt 10pt;
+      display: inline-block;
+      min-width: 100%;
+    }
+
+    .tab-note {
+      font-size: 8pt;
+      font-style: italic;
+      color: #555;
+      margin-top: 4pt;
+    }
+
+    /* ── PRACTICE LOG ── */
+    .practice-log {
+      margin-top: 4pt;
+    }
+
+    .log-header {
+      font-size: 7.5pt;
+      font-weight: bold;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 6pt;
+    }
+
+    .log-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 8pt;
+      margin-bottom: 10pt;
+    }
+
+    .log-label {
+      font-size: 8.5pt;
+      white-space: nowrap;
+      min-width: 36pt;
+    }
+
+    .log-line {
+      flex: 1;
+      border-bottom: 0.75pt solid #000;
+      height: 14pt;
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page { padding: 0; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">Paul Neitsov</div>
+    <div class="header-right">
+      <span>Fingerstyle Guitar: A Meditative Journey</span>
+      <span>Module 3 &nbsp;&middot;&nbsp; Exercise 3</span>
+    </div>
+  </div>
+
+  <!-- TITLE BLOCK -->
+  <div class="title-block">
+    <div class="exercise-title">Pattern Over Three Chords</div>
+    <div class="exercise-meta">Module 3: Chords That Flow &nbsp;&middot;&nbsp; Difficulty: Beginner&ndash;Intermediate &nbsp;&middot;&nbsp; ~15 minutes</div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- DESCRIPTION -->
+  <div class="section-label">About This Exercise</div>
+  <div class="description">
+    This is where the pattern becomes yours. Up until now the p&#8209;i&#8209;m&#8209;a arpeggio has lived safely on one chord &mdash; a warm, familiar room. Now we open the door and let it walk through three. The goal is not to play the chords correctly; you already know how to do that. The goal is to let the pattern keep breathing while the chords move beneath it, the way a river keeps flowing over changing ground. Play slowly enough that you never feel rushed into a change. If the pattern stutters, that is simply information &mdash; it tells you exactly where to rest your attention. With patient repetition, the transitions will dissolve into the music and you will stop noticing them altogether. That moment of forgetting is the reward.
+  </div>
+
+  <hr class="divider">
+
+  <!-- STEPS -->
+  <div class="steps">
+    <div class="section-label">Practice Steps</div>
+    <ol>
+      <li><strong>Settle on one chord first.</strong> Play the full p&#8209;i&#8209;m&#8209;a pattern on a G chord for two minutes until it feels effortless and your hand is completely at ease.</li>
+      <li><strong>Isolate the transitions without the pattern.</strong> Strum G&ndash;C&ndash;D slowly, pausing between each chord to release any tension in your fretting hand before moving.</li>
+      <li><strong>Reintroduce the pattern at half tempo.</strong> Set a metronome to 50&ndash;60 bpm. Play two bars per chord, keeping the arpeggio unbroken. Do not rush the change &mdash; let it arrive.</li>
+      <li><strong>Observe the moment before each change.</strong> Notice if your fretting hand grips harder as a chord change approaches. Consciously soften that grip one beat before you move.</li>
+      <li><strong>Loop and release attention.</strong> Once the changes feel manageable, raise the tempo slightly and let yourself stop thinking about the chords. Shift your focus to the sound, not the mechanics.</li>
+    </ol>
+  </div>
+
+  <hr class="divider">
+
+  <!-- TWO COLUMNS -->
+  <div class="two-col">
+    <div class="col">
+      <div class="section-label">Common Mistakes</div>
+      <ul>
+        <li><strong>Pausing the pattern to change chords.</strong> This is the most common habit. The pattern must continue even if the chord arrives a fraction late &mdash; a late chord is less noticeable than a broken rhythm.</li>
+        <li><strong>Anticipating the change with tension.</strong> The fretting hand often tightens one beat early. Watch for this and treat it as your cue to breathe out instead.</li>
+        <li><strong>Practising at a tempo that exposes the problem without solving it.</strong> If a change keeps failing, slow down further. Speed is earned, never forced.</li>
+      </ul>
+    </div>
+    <div class="col">
+      <div class="section-label">You've Mastered It When&hellip;</div>
+      <ul>
+        <li>The arpeggio pattern runs for four or more uninterrupted loops through the full G&ndash;C&ndash;D progression without a single rhythmic pause, at a tempo of at least 70 bpm.</li>
+        <li>A listener cannot identify the chord change points by ear &mdash; the transitions are absorbed into the texture and the music sounds like one continuous, flowing phrase.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+
+    <!-- TAB SKETCH -->
+    <div class="tab-block">
+      <div class="section-label">Tab Sketch</div>
+      <div class="tab-wrap">
+<pre class="tab">
+  G major                 C major                 D major
+  p  i  m  a             p  i  m  a             p  i  m  a
+
+e|--------3--|------------|--------1--|------------|--------2--|------------|
+B|------0----|------------|------1----|------------|------3----|------------|
+G|----0------|------------|----0------|------------|----2------|------------|
+D|-----------|------------|-----------|------------|--0--------|------------|
+A|-----------|------------|--3--------|------------|-----------|------------|
+E|--3--------|------------|-----------|------------|-----------|------------|
+
+  Repeat each chord for 2 bars before moving to the next.
+  Loop the full progression: G  →  C  →  D  →  G  →  ...
+</pre>
+      </div>
+      <div class="tab-note">Illustrative sketch only &mdash; standard tuning, no capo. Adapt chord voicings to your own hand comfort.</div>
+    </div>
+
+    <!-- PRACTICE LOG -->
+    <div class="practice-log">
+      <div class="log-header">Practice Log</div>
+      <div class="log-row">
+        <div class="log-label">Date</div>
+        <div class="log-line"></div>
+        <div class="log-label">Tempo</div>
+        <div class="log-line"></div>
+        <div class="log-label">Notes</div>
+        <div class="log-line" style="flex:2"></div>
+      </div>
+      <div class="log-row">
+        <div class="log-label">Date</div>
+        <div class="log-line"></div>
+        <div class="log-label">Tempo</div>
+        <div class="log-line"></div>
+        <div class="log-label">Notes</div>
+        <div class="log-line" style="flex:2"></div>
+      </div>
+      <div class="log-row">
+        <div class="log-label">Date</div>
+        <div class="log-line"></div>
+        <div class="log-label">Tempo</div>
+        <div class="log-line"></div>
+        <div class="log-label">Notes</div>
+        <div class="log-line" style="flex:2"></div>
+      </div>
+    </div>
+
+  </div><!-- /footer -->
+
+</div><!-- /page -->
+</body>
+</html>
