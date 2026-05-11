@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Järgmine Käik — 3-kuuline akustilise kitarri teekond</title>
+<meta name="description" content="3-kuuline juhendatud teekond inimesele, kes oskab juba mõnda akordi, aga tahab selget järgmist sammu. Iga kuu üks oskus, üks õppetund, üks harjutusplaan, üks muusikaline rakendus." />
+<style>
+  :root{
+    --bg:#faf8f4;
+    --ink:#1a1816;
+    --muted:#5a544c;
+    --line:#e6e1d8;
+    --brand:#3a5a48;
+    --brand-2:#2d4636;
+    --accent:#b8865b;
+    --vip:#8b5a3c;
+    --card:#ffffff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font:17px/1.6 Georgia, "Iowan Old Style", "Apple Garamond", serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:760px; margin:0 auto; padding:48px 24px 96px;}
+  h1{font-size:44px; line-height:1.1; margin:0 0 12px; font-weight:700; letter-spacing:-.6px}
+  .sub{font-size:21px; line-height:1.45; color:var(--muted); margin:0 0 28px}
+  h2{font-size:28px; line-height:1.25; margin:56px 0 16px; font-weight:700; letter-spacing:-.3px}
+  h3{font-size:20px; margin:24px 0 8px; font-weight:700}
+  p{margin:0 0 16px}
+  .badge{
+    display:inline-block; background:#fdf3e7; color:var(--accent);
+    padding:6px 12px; border-radius:999px; font-size:13px; font-weight:700;
+    letter-spacing:.5px; text-transform:uppercase; margin-bottom:16px;
+  }
+  .lead-quote{
+    font-size:19px; line-height:1.55; color:var(--ink);
+    border-left:3px solid var(--brand); padding:4px 0 4px 20px;
+    margin:24px 0 32px; font-style:italic;
+  }
+  .cta-btn{
+    display:inline-block; background:var(--brand); color:#fff;
+    padding:18px 36px; border-radius:8px; text-decoration:none;
+    font-size:18px; font-weight:700; letter-spacing:.3px;
+    box-shadow:0 6px 20px rgba(58,90,72,.25);
+    transition:transform .1s, box-shadow .1s;
+  }
+  .cta-btn:hover{transform:translateY(-1px); box-shadow:0 10px 28px rgba(58,90,72,.35)}
+  .cta-btn.vip{background:var(--vip); box-shadow:0 6px 20px rgba(139,90,60,.25)}
+  .cta-btn.vip:hover{box-shadow:0 10px 28px rgba(139,90,60,.35)}
+  .guarantee{font-size:14px; color:var(--muted); margin-top:12px}
+  .month{
+    background:var(--card); border:1px solid var(--line); border-radius:12px;
+    padding:24px; margin:16px 0;
+  }
+  .month .label{font-size:13px; text-transform:uppercase; letter-spacing:.15em; color:var(--accent); font-weight:700; margin-bottom:6px}
+  .month b{display:block; font-size:21px; color:var(--brand-2); margin-bottom:8px}
+  .month p{margin:0; color:var(--muted)}
+  .list-clean{margin:12px 0; padding-left:22px}
+  .list-clean li{margin:6px 0; color:var(--muted)}
+  .not-for{background:#fff8ee; border-left:4px solid var(--accent); padding:20px 24px; border-radius:0 8px 8px 0; margin:24px 0}
+  .not-for ul{margin:8px 0 0; padding-left:20px}
+  .not-for li{margin:4px 0}
+  .packages{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:32px 0}
+  .pkg{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:28px}
+  .pkg.vip{border:2px solid var(--vip); position:relative}
+  .pkg.vip::before{
+    content:"AINULT 10 KOHTA"; position:absolute; top:-12px; left:50%; transform:translateX(-50%);
+    background:var(--vip); color:#fff; padding:4px 12px; border-radius:999px;
+    font-size:11px; font-weight:700; letter-spacing:.1em;
+  }
+  .pkg h3{margin:0 0 4px; font-size:22px}
+  .pkg .price{font-size:42px; font-weight:700; color:var(--brand); margin:8px 0; letter-spacing:-.5px}
+  .pkg.vip .price{color:var(--vip)}
+  .pkg ul{margin:12px 0 20px; padding-left:20px}
+  .pkg ul li{margin:6px 0; color:var(--muted); font-size:15px}
+  .pkg .cta-btn{width:100%; text-align:center; padding:14px 20px; font-size:16px}
+  .safety{background:#f4f1ea; padding:20px 24px; border-radius:10px; margin:32px 0; font-size:15px; color:var(--muted)}
+  .faq details{border-bottom:1px solid var(--line); padding:16px 0}
+  .faq summary{cursor:pointer; font-weight:700; font-size:18px; list-style:none}
+  .faq summary::after{content:"+"; float:right; color:var(--brand); font-size:22px; line-height:1}
+  .faq details[open] summary::after{content:"−"}
+  .faq p{margin-top:12px; color:var(--muted)}
+  .small{font-size:14px; color:var(--muted)}
+  .when{background:var(--brand); color:#fff; padding:20px 24px; border-radius:10px; margin:24px 0; text-align:center; font-size:17px}
+  .when b{display:block; font-size:20px; margin-bottom:4px}
+  @media (max-width:600px){
+    h1{font-size:34px}
+    h2{font-size:24px}
+    .sub{font-size:18px}
+    .pkg .price{font-size:34px}
+    .packages{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <span class="badge">Asutajahooaeg · Algab [KUUPÄEV]</span>
+  <h1>Järgmine Käik</h1>
+  <p class="sub">3-kuuline akustilise kitarri teekond neile, kes oskavad juba mõnda akordi, aga tahavad lõpuks teada, mida järgmisena harjutada.</p>
+
+  <p class="lead-quote">Lugesin kursuse ostjate vastuseid ja üks asi kordus väga selgelt: paljudel ei ole probleem selles, et tahtmist poleks. Tahtmist on. Aga mingil hetkel kaob suund ära.</p>
+
+  <p>Ei ole selge, mida järgmisena harjutada. Parem käsi jääb ebakindlaks. Akordid kõlavad natuke puiselt. Ja YouTube'ist juhuslikke videoid vaadates läheb pilt tihti veel segasemaks.</p>
+
+  <p>Sellepärast teen esimese 3-kuulise <b>Järgmise Käigu</b> asutajahooaja.</p>
+
+  <h2>Lubadus</h2>
+  <p>Iga kuu üks konkreetne oskus. Üks õppetund. Üks harjutusplaan. Üks väike muusikaline rakendus.</p>
+  <p><b>Sa ei saa lihtsalt rohkem infot. Sa saad selge järgmise sammu.</b></p>
+
+  <h2>Kellele see sobib</h2>
+  <p>Sobib sulle, kui:</p>
+  <ul class="list-clean">
+    <li>oskad juba mõnda akordi;</li>
+    <li>oled kunagi mänginud, aga tahad uuesti järje peale saada;</li>
+    <li>tahad paremat kontrolli parema käe üle;</li>
+    <li>tahad, et lihtsad akordid kõlaksid ilusamalt;</li>
+    <li>ei taha enam suvalisi videoid lapata;</li>
+    <li>tahad rahulikku ja konkreetset suunda.</li>
+  </ul>
+
+  <h2>Kellele see ei sobi</h2>
+  <div class="not-for">
+    <p style="margin:0"><b>Ole aus iseendaga.</b> See ei ole sulle, kui:</p>
+    <ul>
+      <li>pole kunagi kitarri käes hoidnud;</li>
+      <li>tahad 3 kuuga virtuoosiks saada;</li>
+      <li>ootad iga nädal kümmet uut videot;</li>
+      <li>tahad ainult konkreetsete tuntud lugude TAB-e;</li>
+      <li>otsid klassikalist muusikakooli programmi.</li>
+    </ul>
+  </div>
+
+  <h2>Mida 3 kuu jooksul teeme</h2>
+
+  <div class="month">
+    <div class="label">1. kuu</div>
+    <b>Parem käsi rahulikuks</b>
+    <p>Õpid lihtsaid sõrmitsemismustreid ja saad parema käe stabiilsemaks. Pöial, bass, esimene muster, ühtlus. Kuu lõpuks mängid ühe mustri 60 sekundit järjest ilma katkestamata.</p>
+  </div>
+
+  <div class="month">
+    <div class="label">2. kuu</div>
+    <b>Akordisaade, mis ei kõla igavalt</b>
+    <p>Õpid, kuidas sama akordiringi mängida mitmel moel ja musikaalsemalt. Kuu lõpuks mängid sama 4-akordilise saatemudeli kolmel eri viisil.</p>
+  </div>
+
+  <div class="month">
+    <div class="label">3. kuu</div>
+    <b>Meloodia akordide sisse</b>
+    <p>Õpid lisama lihtsaid meloodilisi liikumisi, et kitarr kõlaks terviklikumalt. Kuu lõpuks mängid lühikese lõigu nii, et bass, akord ja meloodia kõlavad koos.</p>
+  </div>
+
+  <h2>Mida sa saad</h2>
+  <ul class="list-clean">
+    <li>3 kuud juhendatud teekonda;</li>
+    <li>3 õppetundi (20–35 min videoid);</li>
+    <li>3 PDF-i / harjutuslehte;</li>
+    <li>3 harjutusplaani;</li>
+    <li>3 muusikalist rakendust;</li>
+    <li>kinnise liikmete kanali;</li>
+    <li>iga kuu "näita oma mängu" päeva;</li>
+    <li>ligipääs salvestustele hooaja lõpuni.</li>
+  </ul>
+
+  <div class="when">
+    <b>Esimene materjal avaneb [KUUPÄEV]</b>
+    Asutajahooaja müük on avatud kuni [KUUPÄEV] või kuni VIP-kohad täituvad.
+  </div>
+
+  <h2>Paketid</h2>
+
+  <div class="packages">
+    <div class="pkg">
+      <h3>Tavapakett</h3>
+      <div class="price">49€</div>
+      <p class="small">Kogu 3-kuuline asutajahooaeg.</p>
+      <ul>
+        <li>3 õppetundi + 3 PDF-i</li>
+        <li>3 harjutusplaani</li>
+        <li>3 muusikalist rakendust</li>
+        <li>Kinnine liikmete kanal</li>
+        <li>Iga kuu "näita oma mängu" päev</li>
+      </ul>
+      <a href="#osta-tava" class="cta-btn">Liitun tavapaketiga — 49€</a>
+    </div>
+
+    <div class="pkg vip">
+      <h3>VIP</h3>
+      <div class="price">179€</div>
+      <p class="small">Kõik tavapaketist + personaalne tagasiside.</p>
+      <ul>
+        <li>Kogu tavapaketi sisu</li>
+        <li>45-min Zoom Pauliga</li>
+        <li>Saadad enne kõnet kuni 3-min mänguvideo</li>
+        <li>Personaalne tagasiside</li>
+        <li>30 päeva harjutussoovitused</li>
+        <li>Konkreetne järgmine samm just sinu mängu põhjal</li>
+      </ul>
+      <a href="#osta-vip" class="cta-btn vip">Võtan VIP-koha — 179€</a>
+    </div>
+  </div>
+
+  <div class="safety">
+    <b>Turvalisus:</b> Pärast esimest hooaega ei lähe midagi automaatselt kuumakseks. Asutajaliikmed saavad esimesena võimaluse jätkata järgmises hooajas või aastases jätkuprogrammis.
+  </div>
+
+  <h2>Korduvad küsimused</h2>
+  <div class="faq">
+    <details>
+      <summary>Ma olen täiesti algaja, kas see sobib?</summary>
+      <p>See programm eeldab, et sa oskad juba mõnda põhiakordi (nt G, C, D, Em, Am). Kui sa pole veel akorde õppinud, alusta sellest enne — või kirjuta mulle ja räägime.</p>
+    </details>
+    <details>
+      <summary>Kui palju aega ma päevas vajan?</summary>
+      <p>Rahulikult 10–20 minutit. Eesmärk pole rohkem, eesmärk on regulaarsus. Iga kuu fookus on üks oskus.</p>
+    </details>
+    <details>
+      <summary>Millise kitarriga peab olema?</summary>
+      <p>Ükskõik milline akustiline kitarr — nailonkeeltega või terasäelega.</p>
+    </details>
+    <details>
+      <summary>Kas ma saan VIP-i hiljem osta, kui mõtlen ümber?</summary>
+      <p>Kui VIP-kohti on veel järel, siis jah. Aga kohti on ainult 10. Kui need on müüdud, siis järgmise hooajani.</p>
+    </details>
+    <details>
+      <summary>Kas pärast 3 kuud läheb tellimus automaatselt edasi?</summary>
+      <p>Ei. Ühekordne makse, kolm kuud. Pärast hooaja lõppu pakun jätku, aga miski ei tõmba automaatselt.</p>
+    </details>
+    <details>
+      <summary>Kas videod on eesti keeles?</summary>
+      <p>Jah. Kogu programm on eesti keeles.</p>
+    </details>
+    <details>
+      <summary>Mis siis, kui ma ei jõua õigeks kuuks valmis?</summary>
+      <p>Materjal on sinu päralt hooaja lõpuni. Sa võid ühe kuu sisu teha kahe kuuga — see on okei.</p>
+    </details>
+  </div>
+
+  <h2 id="osta-tava">Valmis liituma?</h2>
+  <div style="text-align:center; margin:32px 0">
+    <a href="#" class="cta-btn">Liitun tavapaketiga — 49€</a>
+    <div class="guarantee">Ühekordne makse · 3 kuud · ligipääs hooaja lõpuni</div>
+  </div>
+
+  <div id="osta-vip" style="text-align:center; margin:48px 0">
+    <a href="#" class="cta-btn vip">Võtan VIP-koha — 179€</a>
+    <div class="guarantee">Ainult 10 kohta · 45-min Zoom + personaalne tagasiside</div>
+  </div>
+
+  <p class="small" style="text-align:center; margin-top:48px">
+    © Paul · [Kontakt] · <a href="#">Tingimused</a> · <a href="#">Privaatsus</a>
+  </p>
+
+</div>
+</body>
+</html>
