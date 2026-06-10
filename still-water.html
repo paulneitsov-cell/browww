@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Still Water — an original fingerstyle waltz for steel-string guitar</title>
+<style>
+  :root{
+    --bg:#f7f4ed;
+    --card:#fffdf8;
+    --ink:#2c2a25;
+    --muted:#7a7466;
+    --brand:#8a5a33;
+    --brand-2:#b07a45;
+    --sage:#5f7a5f;
+    --line:#e6dfd2;
+    --radius:16px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font:16px/1.55 Georgia, "Times New Roman", serif;
+    background:
+      radial-gradient(900px 400px at 85% -5%, #efe7d8 0%, transparent 60%),
+      var(--bg);
+    color:var(--ink);
+  }
+  header{
+    max-width:980px; margin:0 auto; padding:48px 20px 8px;
+  }
+  .eyebrow{
+    font:600 12px/1 system-ui, sans-serif; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--sage);
+  }
+  h1{font-size:42px; margin:10px 0 6px; font-weight:500; letter-spacing:.01em;}
+  .sub{color:var(--muted); font-style:italic; margin:0 0 6px;}
+  .meta{
+    display:flex; gap:10px; flex-wrap:wrap; margin:18px 0 0;
+    font:600 13px/1 system-ui, sans-serif;
+  }
+  .meta span{
+    background:#efe9dc; border:1px solid var(--line); color:#6b5435;
+    padding:8px 12px; border-radius:999px;
+  }
+  main{max-width:980px; margin:0 auto; padding:12px 20px 60px;}
+  .card{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:22px 24px; margin:18px 0;
+    box-shadow:0 8px 30px rgba(90,70,40,.06);
+  }
+  h2{font-size:21px; margin:0 0 10px; font-weight:600;}
+  h3{font:600 13px/1 system-ui, sans-serif; letter-spacing:.14em; text-transform:uppercase;
+     color:var(--muted); margin:22px 0 8px;}
+  p{margin:8px 0;}
+  .muted{color:var(--muted);}
+  pre.tab{
+    font:13.5px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    background:#262119; color:#ece5d6;
+    border-radius:12px; padding:16px 18px; overflow-x:auto;
+    margin:10px 0 18px;
+  }
+  pre.tab b{color:#e8b56b; font-weight:700;}
+  pre.tab i{color:#9aa98f; font-style:normal;}
+  .player{display:flex; gap:14px; align-items:center; flex-wrap:wrap;}
+  button{
+    font:700 15px/1 system-ui, sans-serif;
+    border:0; border-radius:12px; padding:13px 22px; cursor:pointer;
+    background:linear-gradient(180deg, var(--brand-2), var(--brand)); color:#fff;
+    box-shadow:0 6px 18px rgba(138,90,51,.35);
+  }
+  button.stop{background:#5c564a; box-shadow:none;}
+  .tempo{display:flex; align-items:center; gap:10px; font:600 13px/1 system-ui, sans-serif; color:var(--muted);}
+  input[type="range"]{accent-color:var(--brand); width:160px;}
+  .now{
+    font:600 14px/1.3 system-ui, sans-serif; color:var(--sage); min-height:20px;
+    margin-top:12px;
+  }
+  .bar-progress{height:6px; background:#ece5d6; border-radius:99px; overflow:hidden; margin-top:10px;}
+  .bar-progress i{display:block; height:100%; width:0%; background:linear-gradient(90deg,var(--sage),#86a386);}
+  ul{margin:8px 0; padding-left:22px;}
+  li{margin:6px 0;}
+  .form-table{
+    display:grid; grid-template-columns:auto 1fr; gap:6px 16px;
+    font-size:15px; margin:10px 0;
+  }
+  .form-table b{color:var(--brand); font-family:system-ui, sans-serif; font-size:13px; letter-spacing:.05em;}
+  footer{max-width:980px; margin:0 auto; padding:0 20px 40px; color:var(--muted); font-size:13px; font-style:italic;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Fingerstyle Guitar — A Meditative Journey · Repertoire</div>
+  <h1>Still Water</h1>
+  <p class="sub">An original fingerstyle waltz for steel-string acoustic guitar</p>
+  <div class="meta">
+    <span>E minor</span><span>3/4 time</span><span>♩ = 76</span>
+    <span>Standard tuning</span><span>Let ring throughout</span><span>27 bars · ~1 min</span>
+  </div>
+</header>
+
+<main>
+
+  <div class="card">
+    <h2>Listen</h2>
+    <p class="muted">Rendered in your browser with a plucked-string model — no recordings, no downloads.</p>
+    <div class="player">
+      <button id="playBtn">▶ Play</button>
+      <div class="tempo">
+        <label for="bpm">Tempo</label>
+        <input id="bpm" type="range" min="56" max="96" value="76">
+        <span id="bpmVal">76 bpm</span>
+      </div>
+    </div>
+    <div class="now" id="now">&nbsp;</div>
+    <div class="bar-progress"><i id="prog"></i></div>
+  </div>
+
+  <div class="card">
+    <h2>The piece</h2>
+    <p>
+      <em>Still Water</em> opens with a single breath: a rising E-minor arpeggio
+      (B–E–G) answered by a falling sigh, where an F♯ leans against a C-major-7
+      chord — a quiet lydian shimmer, like light moving on the surface.
+      The B section lifts the melody to its highest note (the B at the 7th fret)
+      and lets it spill back down; the first theme returns more softly, and the
+      piece settles, through one last sigh, onto a ringing open E-minor chord.
+    </p>
+    <div class="form-table">
+      <b>A · bars 1–8</b><span>The theme. Rising arpeggio, falling answer; ends suspended on B7.</span>
+      <b>B · bars 9–16</b><span>The bloom. The melody climbs to high B over open bass strings.</span>
+      <b>A′ · bars 17–24</b><span>The return — play bars 1–6 again, then the new cadence in bars 23–24.</span>
+      <b>Coda · bars 25–27</b><span>The deceptive resolve: B7 falls onto Cmaj7, one last sigh, then home to Em.</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Tablature</h2>
+    <p class="muted">Thumb plays everything on strings 4–6; fingers <em>i&nbsp;m&nbsp;a</em> take strings 3–1.
+    Let every note ring into the next — lift fingers only when a fret is needed again.</p>
+
+    <h3>A — the theme (bars 1–8)</h3>
+<pre class="tab"><i>    Em           Cmaj7        G            D/F#</i>
+e|------0---3-|--2---0-----|------3---5-|--2---------|
+B|--0---------|------------|--3---------|----------3-|
+G|------------|----------0-|------------|------2-----|
+D|------------|------------|------------|------------|
+A|------------|--3---------|------------|------------|
+E|--0---------|------------|--3---------|--2---------|
+<i>    1   2   3    1   2   3    1   2   3    1   2   3</i>
+
+<i>    Em           Cmaj7        Am7          B7</i>
+e|------0---3-|--5---3---0-|------------|------------|
+B|--0---------|------------|--3-------1-|--0---------|
+G|------------|------------|------0-----|----------2-|
+D|------------|------------|------------|------1-----|
+A|------------|--3---------|--0---------|--2---------|
+E|--0---------|------------|------------|------------|
+<i>    1   2   3    1   2   3    1   2   3    1   2   3</i></pre>
+
+    <h3>B — the bloom (bars 9–16)</h3>
+<pre class="tab"><i>    Am7          Em           Cmaj7        G</i>
+e|--3---5---7-|--7-------3-|--5---3---0-|--3---------|
+B|------------|------------|------------|------0---3-|
+G|------------|------------|------------|------------|
+D|------------|------2-----|------------|------------|
+A|--0---------|------------|--3---------|------------|
+E|------------|--0---------|------------|--3---------|
+<i>    1   2   3    1   2   3    1   2   3    1   2   3</i>
+
+<i>    Am7          Em           Cmaj7        B7</i>
+e|--0---3---5-|<b>--7</b>---5---3-|--0---------|----------2-|
+B|------------|------------|----------3-|--4---------|
+G|------------|------------|------0-----|------2-----|
+D|------------|------------|------------|------------|
+A|--0---------|------------|--3---------|--2---------|
+E|------------|--0---------|------------|------------|
+<i>    1   2   3    1   2   3    1   2   3    1   2   3</i>
+<i>                 ↑ the peak — give this high B a rest stroke</i></pre>
+
+    <h3>A′ — the return (bars 17–24)</h3>
+    <p class="muted">Play bars 1–6 again, a shade quieter, then close the section with:</p>
+<pre class="tab"><i>    Am7          B7</i>
+e|------------|------------|
+B|--3---1---0-|--0---------|
+G|------------|----------2-|
+D|------------|------1-----|
+A|--0---------|--2---------|
+E|------------|------------|
+<i>    1   2   3    1   2   3</i></pre>
+
+    <h3>Coda (bars 25–27)</h3>
+<pre class="tab"><i>    Cmaj7        Em(add9)     Em</i>
+e|--3-------2-|--0---------|--0---------|
+B|------------|----------0-|--0---------|
+G|------0-----|------0-----|--0---------|
+D|------------|------------|--2---------|
+A|--3---------|------------|--2---------|
+E|------------|--0---------|--0---------|
+<i>    1   2   3    1   2   3    1   2   3</i>
+<i>                              ↑ roll slowly, low to high — let ring al niente</i></pre>
+  </div>
+
+  <div class="card">
+    <h2>How to practise it</h2>
+    <ul>
+      <li><strong>Melody alone first</strong> <span class="muted">(Module 4)</span> — play only the top
+        line with fingers, no thumb, until it sings on its own. The whole tune sits in
+        first position except the three notes at frets 5–7.</li>
+      <li><strong>Bass holds the ground</strong> — add the thumb on beat 1 of each bar.
+        Every bass note is a chord root; let it ring for the full bar like a bell.</li>
+      <li><strong>Change on the exhale</strong> <span class="muted">(Module 3)</span> — every chord
+        change lands on beat 1. Breathe out as you arrive.</li>
+      <li><strong>The rest stroke accent</strong> <span class="muted">(Module 5)</span> — the emotional
+        peak is the high B opening bar 14. Play it as a rest stroke so it rings above
+        everything; everywhere else, free strokes.</li>
+      <li><strong>Dynamics</strong> — A section quiet and even; let B grow naturally as the
+        melody climbs; A′ returns softer than the first time; the coda fades to
+        near-silence before the final rolled chord.</li>
+    </ul>
+  </div>
+
+</main>
+
+<footer>
+  Composed for the course “Fingerstyle Guitar: A Meditative Journey”. Free to play, share and teach.
+</footer>
+
+<script>
+(function(){
+  // ---- Score data ------------------------------------------------------
+  // Each bar: [chordName, [[beat, midi, role], ...]]  role: b=bass m=melody i=inner
+  const A = [
+    ['Em',    [[0,40,'b'],[0,59,'m'],[1,64,'m'],[2,67,'m']]],
+    ['Cmaj7', [[0,48,'b'],[0,66,'m'],[1,64,'m'],[2,55,'i']]],
+    ['G',     [[0,43,'b'],[0,62,'m'],[1,67,'m'],[2,69,'m']]],
+    ['D/F#',  [[0,42,'b'],[0,66,'m'],[1,57,'i'],[2,62,'i']]],
+    ['Em',    [[0,40,'b'],[0,59,'m'],[1,64,'m'],[2,67,'m']]],
+    ['Cmaj7', [[0,48,'b'],[0,69,'m'],[1,67,'m'],[2,64,'m']]],
+    ['Am7',   [[0,45,'b'],[0,62,'m'],[1,55,'i'],[2,60,'m']]],
+    ['B7',    [[0,47,'b'],[0,59,'m'],[1,51,'i'],[2,57,'i']]],
+  ];
+  const B = [
+    ['Am7',   [[0,45,'b'],[0,67,'m'],[1,69,'m'],[2,71,'m']]],
+    ['Em',    [[0,40,'b'],[0,71,'m'],[1,52,'i'],[2,67,'m']]],
+    ['Cmaj7', [[0,48,'b'],[0,69,'m'],[1,67,'m'],[2,64,'m']]],
+    ['G',     [[0,43,'b'],[0,67,'m'],[1,59,'i'],[2,62,'i']]],
+    ['Am7',   [[0,45,'b'],[0,64,'m'],[1,67,'m'],[2,69,'m']]],
+    ['Em',    [[0,40,'b'],[0,71,'m'],[1,69,'m'],[2,67,'m']]],
+    ['Cmaj7', [[0,48,'b'],[0,64,'m'],[1,55,'i'],[2,62,'m']]],
+    ['B7',    [[0,47,'b'],[0,63,'m'],[1,57,'i'],[2,66,'m']]],
+  ];
+  const tail = [
+    ['Am7',   [[0,45,'b'],[0,62,'m'],[1,60,'m'],[2,59,'m']]],
+    ['B7',    [[0,47,'b'],[0,59,'m'],[1,51,'i'],[2,57,'i']]],
+  ];
+  const coda = [
+    ['Cmaj7',    [[0,48,'b'],[0,67,'m'],[1,55,'i'],[2,66,'m']]],
+    ['Em(add9)', [[0,40,'b'],[0,64,'m'],[1,55,'i'],[2,59,'i']]],
+    ['Em',       'roll'],
+  ];
+  const bars = [].concat(A, B, A.slice(0,6), tail, coda);
+  const ROLL = [40,47,52,55,59,64];
+
+  // ---- Plucked-string synthesis (Karplus–Strong) -----------------------
+  let ctx = null, master = null, playing = false, timer = null, startTime = 0, beatDur = 0;
+
+  function ensureCtx(){
+    if(ctx) return;
+    ctx = new (window.AudioContext || window.webkitAudioContext)();
+    master = ctx.createGain(); master.gain.value = 0.85;
+    const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 6200;
+    master.connect(lp); lp.connect(ctx.destination);
+    // a touch of room
+    [[0.12,0.28,0.16],[0.27,0.22,0.10]].forEach(([t,fb,wet])=>{
+      const d = ctx.createDelay(1); d.delayTime.value = t;
+      const f = ctx.createGain(); f.gain.value = fb;
+      const w = ctx.createGain(); w.gain.value = wet;
+      master.connect(d); d.connect(f); f.connect(d); d.connect(w); w.connect(lp);
+    });
+  }
+
+  function pluck(midi, when, vel){
+    const freq = 440 * Math.pow(2, (midi - 69) / 12);
+    const sr = ctx.sampleRate;
+    const t60 = midi < 52 ? 7 : 5;
+    const dur = midi < 52 ? 4.2 : 3.2;
+    const n = Math.floor(sr * dur);
+    const buf = ctx.createBuffer(1, n, sr);
+    const out = buf.getChannelData(0);
+    const period = Math.max(2, Math.round(sr / freq));
+    const ring = new Float32Array(period);
+    const bright = midi < 52 ? 0.55 : 0.8;
+    let last = 0, mean = 0;
+    for(let i = 0; i < period; i++){
+      const w = Math.random() * 2 - 1;
+      last = bright * w + (1 - bright) * last;
+      ring[i] = last; mean += last;
+    }
+    mean /= period;
+    for(let i = 0; i < period; i++) ring[i] -= mean;
+    const decay = Math.exp(Math.log(0.001) / (freq * t60));
+    let idx = 0;
+    for(let i = 0; i < n; i++){
+      const cur = ring[idx], nxt = ring[(idx + 1) % period];
+      out[i] = cur;
+      ring[idx] = decay * 0.5 * (cur + nxt);
+      idx = (idx + 1) % period;
+    }
+    const fade = Math.floor(sr * 0.05);
+    for(let i = 0; i < fade; i++) out[n - 1 - i] *= i / fade;
+    const src = ctx.createBufferSource(); src.buffer = buf;
+    const g = ctx.createGain(); g.gain.value = vel;
+    src.connect(g); g.connect(master);
+    src.start(when);
+  }
+
+  const VEL = { m: 0.85, b: 0.6, i: 0.42 };
+
+  // ---- Scheduling -------------------------------------------------------
+  const playBtn = document.getElementById('playBtn');
+  const bpmEl = document.getElementById('bpm');
+  const bpmVal = document.getElementById('bpmVal');
+  const nowEl = document.getElementById('now');
+  const progEl = document.getElementById('prog');
+
+  bpmEl.addEventListener('input', () => bpmVal.textContent = bpmEl.value + ' bpm');
+
+  function stop(){
+    playing = false;
+    cancelAnimationFrame(timer);
+    playBtn.textContent = '▶ Play';
+    playBtn.classList.remove('stop');
+    nowEl.innerHTML = '&nbsp;';
+    progEl.style.width = '0%';
+    if(ctx){ ctx.close(); ctx = null; }
+  }
+
+  function play(){
+    ensureCtx();
+    beatDur = 60 / Number(bpmEl.value);
+    startTime = ctx.currentTime + 0.15;
+    bars.forEach((bar, bi) => {
+      const barT = startTime + bi * 3 * beatDur;
+      if(bar[1] === 'roll'){
+        ROLL.forEach((midi, i) => pluck(midi, barT + i * 0.06, i === ROLL.length - 1 ? 0.8 : 0.55));
+        return;
+      }
+      bar[1].forEach(([beat, midi, role]) => pluck(midi, barT + beat * beatDur, VEL[role]));
+    });
+    playing = true;
+    playBtn.textContent = '■ Stop';
+    playBtn.classList.add('stop');
+    const total = bars.length * 3 * beatDur + 4; // ring-out
+    function tick(){
+      if(!playing) return;
+      const el = ctx.currentTime - startTime;
+      if(el >= total){ stop(); return; }
+      const bi = Math.min(bars.length - 1, Math.max(0, Math.floor(el / (3 * beatDur))));
+      nowEl.textContent = el < bars.length * 3 * beatDur
+        ? 'Bar ' + (bi + 1) + ' of ' + bars.length + '  ·  ' + bars[bi][0]
+        : 'let ring…';
+      progEl.style.width = Math.min(100, 100 * el / (bars.length * 3 * beatDur)) + '%';
+      timer = requestAnimationFrame(tick);
+    }
+    tick();
+  }
+
+  playBtn.addEventListener('click', () => playing ? stop() : play());
+})();
+</script>
+</body>
+</html>
