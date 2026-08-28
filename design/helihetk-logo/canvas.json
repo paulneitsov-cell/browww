@@ -1,0 +1,11 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html", "x": 0, "y": 0, "w": 1040, "h": 880, "title": "Helihetk — põhisuund" },
+    { "file": "SuundB.dc.html", "x": 0, "y": 1020, "w": 640, "h": 420, "title": "Suund B — lainejoon" },
+    { "file": "SuundC.dc.html", "x": 760, "y": 1020, "w": 640, "h": 420, "title": "Suund C — pulsiring" }
+  ],
+  "annotations": [
+    { "id": "kontsept", "x": 1120, "y": 0, "w": 280, "text": "Põhisuund: ekvalaiseri ribadest H-monogramm.\nRibad = heli, esiletõstetud keskmine löök = hetk.\nAktsentvärvi saab põhitahvli seadetest ühe liigutusega vahetada (4 valmis tooni).\nAll kaks alternatiivset suunda võrdluseks." }
+  ],
+  "launch": { "view": "canvas" }
+}
