@@ -1,11 +1,16 @@
 {
+  "pages": [
+    { "id": "page-1", "name": "Logo" },
+    { "id": "page-2", "name": "Esimene ring" }
+  ],
   "artboards": [
-    { "file": "Main.dc.html", "x": 0, "y": 0, "w": 1040, "h": 880, "title": "Helihetk — põhisuund" },
-    { "file": "SuundB.dc.html", "x": 0, "y": 1020, "w": 640, "h": 420, "title": "Suund B — lainejoon" },
-    { "file": "SuundC.dc.html", "x": 760, "y": 1020, "w": 640, "h": 420, "title": "Suund C — pulsiring" }
+    { "file": "Main.dc.html", "x": 0, "y": 0, "w": 1200, "h": 1640, "title": "Helihetk — logo", "page": "page-1" },
+    { "file": "SuundA.dc.html", "x": 0, "y": 0, "w": 1040, "h": 880, "title": "Suund A — ekvalaiser", "page": "page-2" },
+    { "file": "SuundB.dc.html", "x": 0, "y": 1020, "w": 640, "h": 420, "title": "Suund B — lainejoon", "page": "page-2" },
+    { "file": "SuundC.dc.html", "x": 760, "y": 1020, "w": 640, "h": 420, "title": "Suund C — pulsiring", "page": "page-2" }
   ],
   "annotations": [
-    { "id": "kontsept", "x": 1120, "y": 0, "w": 280, "text": "Põhisuund: ekvalaiseri ribadest H-monogramm.\nRibad = heli, esiletõstetud keskmine löök = hetk.\nAktsentvärvi saab põhitahvli seadetest ühe liigutusega vahetada (4 valmis tooni).\nAll kaks alternatiivset suunda võrdluseks." }
+    { "id": "kontsept", "x": 1280, "y": 0, "w": 300, "page": "page-1", "text": "Käsitsi ehitatud kitsas plakatikiri — mitte ükski olemasolev font, nii et logo on päriselt teie oma.\nPunane i-täpp on \"hetk\": see ainus värviline detail kannab kogu brändi.\nProfiilipildis on sõna virnas heli/hetk — kaks \"he\"-d joonduvad teineteise alla." }
   ],
-  "launch": { "view": "canvas" }
+  "launch": { "view": "canvas", "page": "page-1" }
 }
